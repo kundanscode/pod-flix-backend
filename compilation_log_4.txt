@@ -1,0 +1,30 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< com.podflix:demo >--------------------------
+[INFO] Building Podflix 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ demo ---
+[INFO] Deleting C:\Pod-Flix\backend\demo\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ demo ---
+[INFO] Copying 3 resources from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ demo ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 28 source files with javac [debug parameters release 17] to target\classes
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by lombok.permit.Permit
+WARNING: Please consider reporting this to the maintainers of class lombok.permit.Permit
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[WARNING] /C:/Pod-Flix/backend/demo/src/main/java/com/podflix/config/RedisConfig.java:[44,20] org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer in org.springframework.data.redis.serializer has been deprecated and marked for removal
+[INFO] /C:/Pod-Flix/backend/demo/src/main/java/com/podflix/config/YouTubeConfig.java: C:\Pod-Flix\backend\demo\src\main\java\com\podflix\config\YouTubeConfig.java uses or overrides a deprecated API.
+[INFO] /C:/Pod-Flix/backend/demo/src/main/java/com/podflix/config/YouTubeConfig.java: Recompile with -Xlint:deprecation for details.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.880 s
+[INFO] Finished at: 2026-01-14T09:42:23+05:30
+[INFO] ------------------------------------------------------------------------

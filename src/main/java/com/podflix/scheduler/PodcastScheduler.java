@@ -8,8 +8,6 @@ import com.google.api.services.youtube.model.ThumbnailDetails;
 import com.podflix.entity.Podcast;
 import com.podflix.repository.PodcastRepository;
 import com.podflix.service.PodcastService;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 public interface PodcastRepository extends JpaRepository<Podcast, Long> {
     Page<Podcast> findByCategory(String category, Pageable pageable);
 
+    long countByCategory(String category);
+
     boolean existsByVideoId(String videoId);
 
     Podcast findTopByCategoryOrderByPublishedAtDesc(String category);

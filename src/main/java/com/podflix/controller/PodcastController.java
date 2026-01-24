@@ -22,14 +22,10 @@ public class PodcastController {
     }
 
     @GetMapping
-    public ResponseEntity<com.podflix.dto.PagedResponse<PodcastDTO>> getPodcasts(
-            @RequestParam String category,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Page<PodcastDTO>> getPodcasts(
+            @RequestParam String category, Pageable pageable) {
 
-        Pageable pageable = PageRequest.of(page, size);
-        com.podflix.dto.PagedResponse<PodcastDTO> podcast = podcastService.getPodcasts(category, pageable);
-        return ResponseEntity.ok(podcast);
+        return ResponseEntity.ok(podcastService.getPodcasts(category, pageable));
     }
 
 }

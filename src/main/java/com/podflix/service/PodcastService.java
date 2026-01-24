@@ -10,6 +10,7 @@ import com.podflix.entity.Podcast;
 import com.podflix.repository.PodcastRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
@@ -32,23 +33,42 @@ public class PodcastService {
         this.youTube = youTube;
     }
 
-    @Cacheable(value = "podcasts", key = "#category + '_' + #pageable.pageNumber + '_' + #pageable.pageSize")
-    public com.podflix.dto.PagedResponse<PodcastDTO> getPodcasts(String category, Pageable pageable) {
-        Page<Podcast> podcasts;
-        if ("home".equalsIgnoreCase(category)) {
-            podcasts = podcastRepository.findAll(pageable);
-        } else {
-            podcasts = podcastRepository.findByCategory(category, pageable);
-        }
-        Page<PodcastDTO> dtoPage = podcasts.map(this::mapToDTO);
+    @Cacheable(value = "podcasts", key = "'podcasts:' + #category + ':page:0:size:' + #pageable.pageSize", unless = "#pageable.pageNumber == 0")
+    public List<PodcastDTO> getFirstPageCached(String category, Pageable pageable) {
+        Page<Podcast> page = fetchFromDb(category, pageable);
+        return page.getContent()
+                .stream()
+                .map(this::mapToDTO)
+                .toList();
+    }
 
-        return new com.podflix.dto.PagedResponse<>(
-                dtoPage.getContent(),
-                dtoPage.getNumber(),
-                dtoPage.getSize(),
-                dtoPage.getTotalElements(),
-                dtoPage.getTotalPages(),
-                dtoPage.isLast());
+    public Page<PodcastDTO> getPodcasts(String category, Pageable pageable) {
+
+        if (pageable.getPageNumber() == 0) {
+            List<PodcastDTO> cached = getFirstPageCached(category, pageable);
+
+            long total = getTotalCount(category);
+            return new PageImpl<>(cached, pageable, total);
+        }
+
+        Page<Podcast> page = fetchFromDb(category, pageable);
+        return page.map(this::mapToDTO);
+    }
+
+    private long getTotalCount(String category) {
+        if ("home".equalsIgnoreCase(category)) {
+            return podcastRepository.count();
+        } else {
+            return podcastRepository.countByCategory(category);
+        }
+    }
+
+    private Page<Podcast> fetchFromDb(String category, Pageable pageable) {
+        if ("home".equalsIgnoreCase(category)) {
+            return podcastRepository.findAll(pageable);
+        } else {
+            return podcastRepository.findByCategory(category, pageable);
+        }
     }
 
     private PodcastDTO mapToDTO(Podcast podcast) {

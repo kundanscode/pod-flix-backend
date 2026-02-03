@@ -1,14 +1,4 @@
 package com.podflix.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class RegisterRequest {
-    private String username;
-    private String email;
-    private String password;
+public record RegisterRequest(String username, String email, String password) {
 }

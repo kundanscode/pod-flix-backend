@@ -1,6 +1,10 @@
 package com.podflix.service;
 
+import com.podflix.dto.AuthResponse;
+import com.podflix.entity.User;
 import com.podflix.repository.UserRepository;
+import com.podflix.security.JwtUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +15,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private com.podflix.security.JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
@@ -20,8 +24,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public com.podflix.dto.AuthResponse generateTokenByEmail(String email) {
-        com.podflix.entity.User user = userRepository.findByEmail(email)
+    public AuthResponse generateTokenByEmail(String email) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!user.isActive()) {
@@ -29,6 +33,6 @@ public class UserService {
         }
 
         String token = jwtUtil.generateToken(user.getUsername(), user.getTokenVersion());
-        return new com.podflix.dto.AuthResponse(token);
+        return new AuthResponse(token);
     }
 }

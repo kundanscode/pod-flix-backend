@@ -2,6 +2,8 @@ package com.podflix.service;
 
 import com.podflix.entity.User;
 import com.podflix.repository.UserRepository;
+import com.podflix.security.CustomUserDetails;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                                 .or(() -> userRepository.findByEmail(username))
                                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-                return new com.podflix.security.CustomUserDetails(
+                return new CustomUserDetails(
                                 user.getUsername(),
                                 user.getPassword(),
                                 user.getRoles().stream()

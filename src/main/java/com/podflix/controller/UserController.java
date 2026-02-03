@@ -20,6 +20,6 @@ public class UserController {
 
     @PostMapping("/check-email")
     public ResponseEntity<com.podflix.dto.AuthResponse> checkEmail(@RequestBody com.podflix.dto.EmailRequest request) {
-        return ResponseEntity.ok(userService.generateTokenByEmail(request.getEmail()));
+        return ResponseEntity.ok(userService.generateTokenByEmail(request.email()));
     }
 }

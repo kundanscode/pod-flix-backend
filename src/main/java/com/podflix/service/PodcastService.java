@@ -72,15 +72,14 @@ public class PodcastService {
     }
 
     private PodcastDTO mapToDTO(Podcast podcast) {
-        PodcastDTO dto = new PodcastDTO();
-        dto.setVideoId(podcast.getVideoId());
-        dto.setTitle(podcast.getTitle());
-        dto.setDescription(podcast.getDescription());
-        dto.setThumbnailUrl(podcast.getThumbnailUrl());
-        dto.setThumbnailUrlHigh(podcast.getThumbnailUrlHigh());
-        dto.setCategory(podcast.getCategory());
-        dto.setPublishedAt(podcast.getPublishedAt());
-        return dto;
+        return new PodcastDTO(
+                podcast.getVideoId(),
+                podcast.getTitle(),
+                podcast.getDescription(),
+                podcast.getThumbnailUrl(),
+                podcast.getThumbnailUrlHigh(),
+                podcast.getCategory(),
+                podcast.getPublishedAt());
     }
 
     public List<SearchResult> fetchVideosRaw(String query, String publishedAfter) throws IOException {
